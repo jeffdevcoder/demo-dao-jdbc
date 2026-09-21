@@ -10,32 +10,34 @@ import java.util.List;
 
 public class Program {
     void main() {
-        Department obj1 = new Department(1, "Books");
-
-        Seller seller1 = new Seller(21, "Bob", "bob@@gmail.com", new Date(), 3000.0, obj1);
-
         SellerDao sellerDao = DaoFactory.createSellerDao();
 
         System.out.println("====== TEST 1: SELLER findById ======");
-        Seller seller2 = sellerDao.findByID(3);
-        System.out.println(seller2);
+        Seller seller = sellerDao.findByID(3);
+        System.out.println(seller);
 
         System.out.println("\n====== TEST 2: seller findByDepartment ======");
         Department department = new Department(2, null);
         List<Seller> list = sellerDao.findByDepartment(department);
-        for (Seller obj2 : list) {
-            System.out.println(obj2);
+        for (Seller obj : list) {
+            System.out.println(obj);
         }
 
         System.out.println("\n===== TEST 3: seller findAll =====");
         list = sellerDao.findAll();
-        for (Seller obj : list) {
-            System.out.println(obj);
+        for (Seller obj2 : list) {
+            System.out.println(obj2);
         }
 
         System.out.println("\n===== TEST 4: seller insert =====");
         Seller newSeller = new Seller(null, "Jeff", "jeff@gmail.com", new Date(), 4000.0, department);
         sellerDao.insert(newSeller);
         System.out.println("Inserted! New id = " + newSeller.getId());
+
+        System.out.println("\n===== TEST 5: seller update =====");
+        seller = sellerDao.findByID(1);
+        seller.setName("Messi");
+        sellerDao.update(seller);
+        System.out.println("Update completed");
     }
 }
